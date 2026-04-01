@@ -1,13 +1,15 @@
-# Bibliotecas
+# BIBLIOTECAS----------------------------------------------------------------------
 import os
 os.system('cls')
 
 import csv
 
 from datetime import datetime
+agora = datetime.now()
+formatado = agora.strftime('Hoje: %d/%m/%y Horário: %H:%M')
 
-# Funções
-# CADASTRO
+# FUNCOES---------------------------------------------------------------------------
+# cadastro
 def cadastro():
     print(f'{"Crie Sua Conta":^60}')
 
@@ -29,7 +31,7 @@ def cadastro():
 
         print('Cadastro realizado com sucesso!')
 
-# LOGIN
+# login
 def login():
     print(f'{"Entrar":^60}')
 
@@ -51,31 +53,82 @@ def login():
             else:
                 print('Usuário não encontrado. Tente novamente.')
 
-# Tittle
+# criar evento
+def criarevento():
+    print(f'{"Criação de Evento\n":^60}')
+    diaevento = int(input('Dia (Ex.: 08): '))
+    mesevento = int(input('Mês (Ex.: 08): '))
+    anoevento = int(input('Ano (Ex.: 2026): '))
+    horaevento = int(input('Horário (Ex: 15:30): '))
+    nomeevento = input('Nome do evento (Ex.: Médico): ')
 
+    with open ('TermPlan/eventos.csv', 'a', newline='') as eventos:
+        escritor = csv.writer(eventos)
+        escritor.writerow([diaevento, mesevento, anoevento, horaevento, nomeevento])
+
+        print(f'Evento salvo com sucesso!')
+
+# agenda da semana
+def agendadasemana():
+    print(f'{"Agenda da Semana".center(60)}')
+
+    diassemana = ['Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira',
+                   'Sexta-feira', 'Sábado', 'Domingo']
+    
+    hoje = agora.isoweekday()
+
+    for i, dia in enumerate(diassemana, start=1): # → start=1 faz com que o loop comece em 1
+        if i == hoje:
+            print(f'→ \033[1;33m{dia}\033[m \033[1;32m(Hoje)\033[m: ')
+
+        else:
+            print(f'{dia}: ')
+
+# CODIGO MAIN-----------------------------------------------------------------------
+
+# titulo
 print('-=-' * 20)
 print(f'{"TermPlan":^60}')
 print('-=-' * 20)
 print()
 
-# Já tem uma conta? / 
+# ja tem conta / sim ou nao 
 print(f'{'Você já tem uma conta?':^60}')
 print('[1] Sim\n[2] Não')
 
-resposta = int(input('-----> 1 ou 2: '))
+Rjatemconta = int(input('----→ 1 ou 2: '))
 print('___' * 20)
 
-# Cadastro e Login
+# cadastro e login
 
-if resposta == 2:
+if Rjatemconta == 2:
     cadastro()
 
-elif resposta == 1:
+elif Rjatemconta == 1:
     login()
     
-# DashBoard
+# titulo tela de inicio
 print('___' * 20)
-agora = datetime.now()
+print(formatado.center(60))
+
+# acessar agenda ou adicionar compromisso
+
+print('\n[1] Acessar agenda\n[2] Criar evento')
+Rteladeinicio = int(input('----→ 1 ou 2: '))
+print('___' * 20)
+
+if Rteladeinicio == 2:
+    criarevento()
+
+elif Rteladeinicio == 1:
+    agendadasemana()
+
+
+
+
+
+
+
 
 
 
